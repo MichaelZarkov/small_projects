@@ -7,7 +7,7 @@
 // The generated data computes the average of the input neurons.
 void generateDataForAverage(const char* filePath)
 {
-	size_t numberOfExamples = 100'000;
+	size_t numberOfExamples = 10'000;
 	Matrix trDataInp{ numberOfExamples, 100 };
 	Matrix trDataAns{ numberOfExamples, 10 };
 
