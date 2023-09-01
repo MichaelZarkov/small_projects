@@ -1,1 +1,1 @@
-Implementation of some algorithms working on arrays.
+**Implementation of some algorithms working on arrays.**
