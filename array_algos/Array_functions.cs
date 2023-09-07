@@ -2,6 +2,10 @@
 namespace ArrFun
 {
     // Should try to make all functions template.
+
+    // For in-depth explanation of some of the algorithms, check out "Лекции по Алгоритми, 2023 година, Минко Марков".
+    // Some of the functions are direct implementations from there.
+    // https://learn.fmi.uni-sofia.bg/pluginfile.php/430351/mod_resource/content/7/lec-algs.pdf
     public static class Manip    // Static class because every method operates on external objects.
     {
         // Reverses an array.
@@ -14,7 +18,6 @@ namespace ArrFun
             }
         }
 
-        // This implementation is from "Лекции по Алгоритми, 2023 година, Минко Марков"
         public static void InsertionSort(int[] arr)
         {
             for(int i = 1; i < arr.Length; i++)
@@ -30,7 +33,6 @@ namespace ArrFun
             }
         }
 
-        // This implementation is from "Лекции по Алгоритми, 2023 година, Минко Марков"
         // Moves elements in the array only with swaps.
         public static void SelectionSort1(int[] arr)
         {
@@ -56,10 +58,10 @@ namespace ArrFun
         }
 
 
+
         // Returns true if 'index' is not a leaf node.
         static bool IsNotLeaf(int arrLength, int index)
         { return (2 * index + 1) < arrLength; }
-        
         // 'i' - index in 'arr'
         // If LeftChild(index) and RightChild(index) exist they must be piramids for the function to work.
         static void HeapifyIterative(int[] arr, int arrLen, int i)
@@ -101,6 +103,7 @@ namespace ArrFun
         }
 
 
+
         // arr[beg], arr[beg+1], ... , arr[mid] and arr[mid+1], ... , arr[end] have to be sorted arrays.
         // The function merges them in a single sorted array and puts it in arr[beg], ..., arr[end].
         static void Merge(int[] arr, int[] buff, int beg, int mid, int end)
@@ -110,7 +113,7 @@ namespace ArrFun
             int left = beg;
             int right = mid + 1;
             while (left <= mid && right <= end)
-                buff[result++] = arr[left] < arr[right] ? arr[left++] : arr[right++];
+                buff[result++] = arr[left] <= arr[right] ? arr[left++] : arr[right++];
 
             while (left <= mid)
                 buff[result++] = arr[left++];
@@ -142,5 +145,50 @@ namespace ArrFun
 
             MergesortStep(arr, buff, 0, arr.Length - 1);
         }
+
+
+
+        // This variant of a partition function was invented by Nico Lomuto around 1984.
+        // The function chooses a pivot (the right most element of the array) and rearranges
+        // the array so that all elements smaller than pivot are before pivot, then pivot,
+        // then all elements that are larger or equal to pivot.
+        // Returns the position of pivot.
+        // 'beg', 'end' - indexes in the array. Must be 'beg < end'.
+        static int PartitionLomuto(int[] arr, int beg, int end)
+        {
+            int pivot = arr[end];
+            int pp = beg;           // 'pp' stands for pivot position.
+            for (int i = beg; i < end; i++)
+            {
+                if (arr[i] < pivot)
+                {
+                    (arr[i], arr[pp]) = (arr[pp], arr[i]);
+                    ++pp;
+                }
+            }
+
+            (arr[pp], arr[end]) = (arr[end], arr[pp]);
+            return pp;
+        }
+        // Sorts the elements of 'arr' from 'beg' to 'end'.
+        // 'beg', 'end' - indexes in 'arr'.
+        static void QuicksortStep(int[] arr, int beg, int end)
+        {
+            if (beg >= end)    // Arrays with 0 or 1 elements are sorted.
+                return;
+
+            int pivotPosition = PartitionLomuto(arr, beg, end);
+
+            // The element in position 'pivotPosition' is already in its place in the
+            // sorted array so we don't need to include it in the recursive calls.
+            QuicksortStep(arr, beg, pivotPosition - 1);
+            QuicksortStep(arr, pivotPosition + 1, end);
+        }
+        // This function is only for convenience so the only argument is the array to be sorted.
+        public static void Quicksort(int[] arr)
+        {
+            QuicksortStep(arr, 0, arr.Length - 1);
+        }
+
     }
 }

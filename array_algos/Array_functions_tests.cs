@@ -61,6 +61,60 @@ namespace Array_manipulations_tests
         }
 
         [TestMethod]
+        public void HeapsortTest()
+        {
+            int[] input1 = new int[0];
+            int[] input2 = { 1, 2, 3, 4, 5 };
+            int[] input3 = { -2, -2, 9, 9, -2 };
+
+            int[] output2 = { 1, 2, 3, 4, 5 };
+            int[] output3 = { -2, -2, -2, 9, 9 };
+
+            ArrFun.Manip.Heapsort(input1);    // This will throw exception if something is not right.
+            ArrFun.Manip.Heapsort(input2);
+            ArrFun.Manip.Heapsort(input3);
+
+            Assert.IsTrue(Enumerable.SequenceEqual(input2, output2));
+            Assert.IsTrue(Enumerable.SequenceEqual(input3, output3));
+        }
+
+        [TestMethod]
+        public void MergesortTest()
+        {
+            int[] input1 = new int[0];
+            int[] input2 = { 1, 2, 3, 4, 5 };
+            int[] input3 = { -2, -2, 9, 9, -2 };
+
+            int[] output2 = { 1, 2, 3, 4, 5 };
+            int[] output3 = { -2, -2, -2, 9, 9 };
+
+            ArrFun.Manip.Mergesort(input1);    // This will throw exception if something is not right.
+            ArrFun.Manip.Mergesort(input2);
+            ArrFun.Manip.Mergesort(input3);
+
+            Assert.IsTrue(Enumerable.SequenceEqual(input2, output2));
+            Assert.IsTrue(Enumerable.SequenceEqual(input3, output3));
+        }
+
+        [TestMethod]
+        public void QuicksortTest()
+        {
+            int[] input1 = new int[0];
+            int[] input2 = { 1, 2, 3, 4, 5 };
+            int[] input3 = { -2, -2, 9, 9, -2 };
+
+            int[] output2 = { 1, 2, 3, 4, 5 };
+            int[] output3 = { -2, -2, -2, 9, 9 };
+
+            ArrFun.Manip.Quicksort(input1);    // This will throw exception if something is not right.
+            ArrFun.Manip.Quicksort(input2);
+            ArrFun.Manip.Quicksort(input3);
+
+            Assert.IsTrue(Enumerable.SequenceEqual(input2, output2));
+            Assert.IsTrue(Enumerable.SequenceEqual(input3, output3));
+        }
+
+        [TestMethod]
         public void CompareSortingAlgs()
         {
             // Make a bunch of arrays and test if the sorting algos agree
@@ -73,6 +127,7 @@ namespace Array_manipulations_tests
                 int[] selectionsort = new int[i];
                 int[] heapsort = new int[i];
                 int[] mergesort = new int[i];
+                int[] quicksort = new int[i];
 
                 // Fill with random numbers.
                 for (int j = 0; j < insertionsort.Length; j++)
@@ -81,6 +136,7 @@ namespace Array_manipulations_tests
                     selectionsort[j] = insertionsort[j];
                     heapsort[j] = insertionsort[j];
                     mergesort[j] = insertionsort[j];
+                    quicksort[j] = insertionsort[j];
                 }
 
                 // Act.
@@ -88,11 +144,13 @@ namespace Array_manipulations_tests
                 ArrFun.Manip.SelectionSort1(selectionsort);
                 ArrFun.Manip.Heapsort(heapsort);
                 ArrFun.Manip.Mergesort(mergesort);
+                ArrFun.Manip.Quicksort(quicksort);
 
                 // Test if sorting algos agree with each other.
                 Assert.IsTrue(Enumerable.SequenceEqual(insertionsort, selectionsort));
                 Assert.IsTrue(Enumerable.SequenceEqual(selectionsort, heapsort));
                 Assert.IsTrue(Enumerable.SequenceEqual(heapsort, mergesort));
+                Assert.IsTrue(Enumerable.SequenceEqual(mergesort, quicksort));
             }
         }
     }
